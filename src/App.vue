@@ -1,14 +1,30 @@
 <script setup>
+import { ref } from "vue";
+const tasks = ref(["Learn Vue", "Learn Vue Router", "Learn JavaScript"]);
+const task = ref("");
+function addTasks() {
+  if (task.value) {
+    tasks.value.unshift(task.value);
+    task.value = "";
+  }
+}
+function deleteTasks(index) {
+  tasks.value.splice(index, 1);
+}
 </script>
 
 <template>
   <div class="container-fluid">
     <div class="container">
-      <input type="text" autofocus />
-      <div class="list">
-        <div class="todo-list">Task 1</div>
-        <div class="todo-list">Task 2</div>
-        <div class="todo-list">Task 3</div>
+      <input
+        type="text"
+        autofocus
+        placeholder="add to task here..."
+        v-model="task"
+        @keyup.enter="addTasks()"
+      />
+      <div class="list" v-for="(task, index) in tasks" :key="index">
+        <div class="todo-list" @click="deleteTasks(index)">{{ task }}</div>
       </div>
     </div>
   </div>
