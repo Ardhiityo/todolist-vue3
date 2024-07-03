@@ -23,20 +23,17 @@ function deleteTasks(index) {
         v-model="task"
         @keyup.enter="addTasks()"
       />
-  
-        <TransitionGroup name="item">
-          
-          <div
-            v-for="(task, index) in tasks"
-            :key="task"
-            class="todo-list"
-            @click="deleteTasks(index)"
-          >
-            {{ task }}
-          </div>
-          
-        </TransitionGroup>
-   
+
+      <TransitionGroup name="item">
+        <div
+          v-for="(task, index) in tasks"
+          :key="task"
+          class="todo-list"
+          @click="deleteTasks(index)"
+        >
+          {{ task }}
+        </div>
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -56,6 +53,7 @@ function deleteTasks(index) {
   justify-content: start;
   flex-direction: column;
   margin-top: 30px;
+  position: relative;
 }
 input {
   width: 100%;
@@ -64,6 +62,7 @@ input {
   margin-bottom: 25px;
   border: 2px solid #949494;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-sizing: border-box;
 }
 .todo-list {
   border-radius: 8px;
@@ -73,6 +72,7 @@ input {
   margin: 10px 0;
   border: 1px solid #ccc;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-sizing: border-box;
 }
 .item-enter-from {
   opacity: 0;
@@ -83,6 +83,21 @@ input {
   transform: scale(1);
 }
 .item-enter-active {
-  transition: all 1s ease;
+  transition: all 0.5s ease;
+}
+.item-move {
+  transition: all 0.5s ease;
+}
+.item-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+.item-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+.item-leave-active {
+  transition: all 0.5s ease;
+  position: absolute;
 }
 </style>
