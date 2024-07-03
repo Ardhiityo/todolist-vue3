@@ -23,9 +23,20 @@ function deleteTasks(index) {
         v-model="task"
         @keyup.enter="addTasks()"
       />
-      <div class="list" v-for="(task, index) in tasks" :key="index">
-        <div class="todo-list" @click="deleteTasks(index)">{{ task }}</div>
-      </div>
+  
+        <TransitionGroup name="item">
+          
+          <div
+            v-for="(task, index) in tasks"
+            :key="task"
+            class="todo-list"
+            @click="deleteTasks(index)"
+          >
+            {{ task }}
+          </div>
+          
+        </TransitionGroup>
+   
     </div>
   </div>
 </template>
@@ -50,22 +61,28 @@ input {
   width: 100%;
   padding: 20px;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border: 2px solid #949494;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-.list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 15px 0;
-  text-align: center;
 }
 .todo-list {
   border-radius: 8px;
   padding: 20px;
+  width: 100%;
+  text-align: center;
+  margin: 10px 0;
   border: 1px solid #ccc;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.item-enter-from {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.item-enter-to {
+  opacity: 1;
+  transform: scale(1);
+}
+.item-enter-active {
+  transition: all 1s ease;
 }
 </style>
