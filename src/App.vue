@@ -1,42 +1,17 @@
-<script setup>
-import { ref } from "vue";
-const tasks = ref(["Learn Vue", "Learn Vue Router", "Learn JavaScript"]);
-const task = ref("");
-function addTasks() {
-  if (task.value) {
-    tasks.value.unshift(task.value);
-    task.value = "";
-  }
-}
-function deleteTasks(index) {
-  tasks.value.splice(index, 1);
-}
-</script>
-
 <template>
   <div class="container-fluid">
     <div class="container">
-      <input
-        type="text"
-        autofocus
-        placeholder="add to task here..."
-        v-model="task"
-        @keyup.enter="addTasks()"
-      />
-
-      <TransitionGroup name="item">
-        <div
-          v-for="(task, index) in tasks"
-          :key="task"
-          class="todo-list"
-          @click="deleteTasks(index)"
-        >
-          {{ task }}
-        </div>
-      </TransitionGroup>
+      <Navbar />
+      <Transition name="router">
+        <RouterView />
+      </Transition>
     </div>
   </div>
 </template>
+
+<script setup>
+import Navbar from "./components/Navbar.vue";
+</script>
 
 <style scoped>
 .container-fluid {
@@ -55,49 +30,15 @@ function deleteTasks(index) {
   margin-top: 30px;
   position: relative;
 }
-input {
-  width: 100%;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  border: 2px solid #949494;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  box-sizing: border-box;
-}
-.todo-list {
-  border-radius: 8px;
-  padding: 20px;
-  width: 100%;
-  text-align: center;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  box-sizing: border-box;
-}
-.item-enter-from {
+.router-enter-from {
   opacity: 0;
-  transform: scale(0.5);
+  transform: translateX(-50px);
 }
-.item-enter-to {
+.router-enter-to {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0);
 }
-.item-enter-active {
-  transition: all 0.5s ease;
-}
-.item-move {
-  transition: all 0.5s ease;
-}
-.item-leave-from {
-  opacity: 1;
-  transform: scale(1);
-}
-.item-leave-to {
-  opacity: 0;
-  transform: scale(0);
-}
-.item-leave-active {
-  transition: all 0.5s ease;
-  position: absolute;
+.router-enter-active {
+  transition: all 1s ease;
 }
 </style>
