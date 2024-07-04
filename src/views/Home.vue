@@ -11,6 +11,24 @@ function addTasks() {
 function deleteTasks(index) {
   tasks.value.splice(index, 1);
 }
+function beforeEnter() {
+  console.log('before enter');
+}
+function enter() {
+  console.log('enter');
+}
+function afterEnter() {
+  console.log('after enter');
+}
+function beforeLeave() {
+  console.log('before leave');
+}
+function leave() {
+  console.log('leave');
+}
+function afterLeave() {
+  console.log('after leave');
+}
 </script>
 
 <template>
@@ -23,7 +41,16 @@ function deleteTasks(index) {
       @keyup.enter="addTasks()"
     />
 
-    <TransitionGroup name="item">
+    <TransitionGroup
+      name="item"
+      appear
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @before-leave="beforeLeave"
+      @leave="leave"
+      @after-leave="afterLeave"
+    >
       <div
         v-for="(task, index) in tasks"
         :key="task"
